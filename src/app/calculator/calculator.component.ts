@@ -67,14 +67,14 @@ export class CalculatorComponent {
   }
 
   drawDispVal() {
-    let calc_val = this.filterDispVal();
+    let calc_val = this.cleanDispVal();
 
     calc_val.text(this.value);
 
     this.updateInputVal(0, true); // reset user-value
   }
 
-  filterDispVal () {
+  cleanDispVal () {
     let calc_val = d3.select("#calc-value");
 
     if ( isNaN(this.value) ) { this.value = 0; }
@@ -125,7 +125,7 @@ export class CalculatorComponent {
         this.value *= this.updateVal;
         break;
       default:
-        console.log("calculation error");
+        window.alert("calculation error");
         break;
     }
 
@@ -146,7 +146,7 @@ export class CalculatorComponent {
     } else if (typeof btn === "number") {
       this.updateInputVal(btn, false);
     } else {
-      console.log("button error");
+      window.alert("button error");
     }
   }
 }
