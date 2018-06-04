@@ -2,12 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import * as d3 from 'd3';
 
 @Component({
-  selector: 'app-calculator', // css selector
-  templateUrl: './calculator.component.html', // location of html-view file
-  styleUrls: ['./calculator.component.css'] // comp. specific css file
+  selector: 'app-dm-calculator',
+  templateUrl: './dm-calculator.component.html',
+  styleUrls: ['./dm-calculator.component.css']
 })
-
-export class CalculatorComponent {
+export class DmCalculatorComponent {
 
   value = 0;
   updateVal = 0;
@@ -15,6 +14,7 @@ export class CalculatorComponent {
   constructor() {
   }
 
+  // how do I make a parent calculator for both of these and just bootstrap the close onto the DM one?
   ngOnInit() {
     // called 'shortly after' creating the component, good for init logic.
     const calc = d3.select(".calculator");
@@ -30,6 +30,7 @@ export class CalculatorComponent {
       .attr('class', 'input-value')
 
     const clear = d3.select(".clear")
+    const close = d3.select(".close") // because it's a modal on the dm side
 
     const zero = d3.select(".zero")
     const one = d3.select(".one")
@@ -48,6 +49,7 @@ export class CalculatorComponent {
     const multiply = d3.select(".multiply")
 
     clear.on("click", () => this.whatButton("clear"));
+    close.on("click", () => this.whatButton("close"));
 
     zero.on("click", () => this.whatButton(0));
     one.on("click", () => this.whatButton(1));
@@ -125,7 +127,7 @@ export class CalculatorComponent {
         this.value *= this.updateVal;
         break;
       default:
-        window.alert("calculation error");
+        console.log("calculation error");
         break;
     }
 
@@ -136,6 +138,8 @@ export class CalculatorComponent {
     if (btn === "clear") {
       this.updateInputVal(0, true); // reset user-value
       this.resetDisplayValue(); // reset user-value
+    } else if (btn === "close") {
+      console.log(btn);
     } else if (
       btn === "+" ||
       btn ===  "-" ||
@@ -146,7 +150,7 @@ export class CalculatorComponent {
     } else if (typeof btn === "number") {
       this.updateInputVal(btn, false);
     } else {
-      window.alert("button error");
+      console.log("button error");
     }
   }
 }
